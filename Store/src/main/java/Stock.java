@@ -1,30 +1,43 @@
-import java.util.*; 
+import java.util.*;
 
-public class Stock extends Product
+public class Stock
 {
-    public List<Product> products = new ArrayList<>();
+   private List<StockItem> stockItems = new ArrayList<>();
     
-      public void createStock()
-    {
-       products.add(new Product("banane", 1.20, 20));
-       products.add(new Product("mere", 3, 10));
-       products.add(new Product("cartofi", 4.90, 50));
-       products.add(new Product("pere", 2.30, 10));
-    }
-      
-    public void updateStock(Bill bill)
-    {
-        products.forEach((productInStock) ->
-        {
-            bill.billProducts.forEach((productsToSell) ->
-            {
-                if(productInStock.name.equals(productsToSell.name))
-                {
-                    productInStock.quantity -=productsToSell.quantity;
-                }
-            }
-            );
-        }
-        );
-    }
+   
+   public List<StockItem> getStockItems()
+   {
+       return this.stockItems;
+   }
+   
+   public void addProduct(Product product, int quantity)
+   {
+       StockItem stockItem = new StockItem();
+       stockItem.setStockItem(product, quantity);
+       stockItems.add(stockItem);
+   }
+   
+   public void updateProductPrice(Product product, double price)
+   {
+       for(int i = 0; i < stockItems.size(); i++)
+       {
+           if(stockItems.get(i).getName().equals(product.getName()))
+           {
+              stockItems.get(i).setPrice(price);
+           }
+           break;
+       }
+   }
+   
+   public void printStockItems()
+   {
+       for(int i = 0; i < stockItems.size(); i++)
+       {
+           System.out.println("Name - Description - Price - Quantity");
+           System.out.print(stockItems.get(i).getName()+ " ");
+           System.out.print(stockItems.get(i).getDescription() + " ");
+           System.out.print(stockItems.get(i).getPrice() + " ");
+           System.out.println(stockItems.get(i).getQuantity()); 
+       }
+   }
 }
